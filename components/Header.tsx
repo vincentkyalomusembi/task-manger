@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 
@@ -9,13 +8,12 @@ export default function Header() {
 
   return (
     <header className="w-full bg-white shadow-md py-4 px-6 flex items-center justify-between">
-      <Link href="/dashboard" className="text-xl font-bold text-gray-800">
-        Task Manager
-      </Link>
-      {session?.user && (
-        <Button variant="outline" onClick={() => signOut({ callbackUrl: "/login" })}>
-          Sign Out
-        </Button>
+      <h1 className="text-xl font-bold">Task Manager</h1>
+      {session && (
+        <div className="flex items-center gap-4">
+          <span>{session.user?.email}</span>
+          <Button onClick={() => signOut()}>Sign Out</Button>
+        </div>
       )}
     </header>
   );
