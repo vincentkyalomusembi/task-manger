@@ -1,9 +1,7 @@
-// app/layout.tsx
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SessionProvider } from "next-auth/react";
-import Header from "@/components/Header"; // shared navigation header
+import { Geist, Geist_Mono } from "next/font/google";
+import { SessionProviderWrapper } from "@/components/SessionProviderWrapper";
+import Header from "@/components/Header"; // Also must be a client component
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,29 +13,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Task Manager",
   description: "Manage your tasks efficiently with authentication",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* NextAuth session context available throughout the app */}
-        <SessionProvider>
-          {/* Shared layout header (can be hidden on some pages if needed) */}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <SessionProviderWrapper>
           <Header />
-          
-          {/* Page-specific content */}
           <main className="p-4">{children}</main>
-        </SessionProvider>
+        </SessionProviderWrapper>
       </body>
     </html>
   );
