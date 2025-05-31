@@ -47,4 +47,3 @@ const handler = NextAuth({
 
 // Export handler for Next.js API (supports both GET and POST)
 export { handler as GET, handler as POST };
-/home/vin/task-manager/app/api/route.ts
