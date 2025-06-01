@@ -14,8 +14,9 @@ import QueryProvider from "@/components/QueryProvider";
 import Header from "@/components/Header";
 
 // Import NextAuth's SessionProvider to enable session support
-import { SessionProviderWrapper } from "@/components/SessionProviderWrapper"; // ✅ client-only wrapper
+import { SessionProviderWrapper } from "@/components/SessionProviderWrapper"; // client-only wrapper
 
+import ReduxProvider from "@/components/ReduxProvider";
 
 // Configure Google fonts with CSS variables
 const geistSans = Geist({
@@ -35,18 +36,20 @@ export const metadata: Metadata = {
 };
 
 // Root layout wraps the entire app
+// Inside RootLayout:
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <SessionProviderWrapper>
-          <QueryProvider>
-            <Header />
-            {children}
-          </QueryProvider>
-        </SessionProviderWrapper>
+        <ReduxProvider> {/* 👈 wrap ReduxProvider */}
+          <SessionProviderWrapper>
+            <QueryProvider>
+              <Header />
+              {children}
+            </QueryProvider>
+          </SessionProviderWrapper>
+        </ReduxProvider>
       </body>
     </html>
   );
 }
-

@@ -1,27 +1,50 @@
-import { Card } from "@/components/ui/card";
+"use client";
 
-type Task = {
+import TaskItem from "./TaskItem";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+interface Task {
   id: number;
   title: string;
-  completed: boolean;
-};
+}
 
 export default function TaskList({ tasks }: { tasks: Task[] }) {
+  const queryClient = useQueryClient();
+
+  // Delete Task Mutation
+  const deleteTask = useMutation({
+    mutationFn: async (id: number) => {
+      await fetch(`/api/tasks?id=${id}`, { method: "DELETE" });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
+
+  // Edit Task Mutation
+  const editTask = useMutation({
+    mutationFn: async ({ id, title }: { id: number; title: string }) => {
+      await fetch(`/api/tasks`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, title }),
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    },
+  });
+
   return (
-    <div className="grid gap-4">
+    <div>
       {tasks.map((task) => (
-        <Card key={task.id} className="p-4">
-          <div className="flex justify-between">
-            <span>{task.title}</span>
-            <span
-              className={`text-sm ${
-                task.completed ? "text-green-600" : "text-yellow-600"
-              }`}
-            >
-              {task.completed ? "Done" : "Pending"}
-            </span>
-          </div>
-        </Card>
+        <TaskItem
+          key={task.id}
+          id={task.id}
+          title={task.title}
+          onDelete={(id) => deleteTask.mutate(id)}
+          onEdit={(id, newTitle) => editTask.mutate({ id, title: newTitle })}
+        />
       ))}
     </div>
   );
