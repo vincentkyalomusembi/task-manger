@@ -1,37 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+ Task Manager Frontend
 
-## Getting Started
+A task management web application built using **Next.js 15**, **TypeScript**, **Redux**, and **NextAuth**. The app supports user authentication, protected routes, task listing, adding, and deleting tasks with client-side state management.
 
-First, run the development server:
 
-```bash
+✨ Features
+
+- 🔐 User authentication with NextAuth (Credentials Provider)
+- 🧭 Protected dashboard and middleware-based access control
+- 🗂 Task listing with Redux state management
+- ➕ Add and ❌ delete tasks
+- ⚡ TanStack Query (React Query) for data fetching
+- 🧪 Fully client-side app with mock authentication logic
+- 🎨 Styled using Tailwind CSS & ShadCN UI components
+
+---
+
+🧰 Technologies Used
+
+- [Next.js 15](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
+- [NextAuth.js](https://next-auth.js.org/)
+- [TanStack Query](https://tanstack.com/query/latest)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [ShadCN UI](https://ui.shadcn.com/)
+- [Google Fonts – Geist](https://vercel.com/font)
+
+---
+
+ 🚀 Getting Started
+
+
+# Clone the repository
+git clone https://github.com/vincentkyalomusembi/task-manger.git
+cd task-manager-frontend
+
+# Install dependencies
+npm install
+
+# Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Test Credentials
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Email: admin@example.com
+Password: admin
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🔐 Login Page
+![image](https://github.com/user-attachments/assets/7708b14e-ad73-41f0-baa4-5c62ec8b44e1)
 
-## Learn More
+📝 Register Page
+![image](https://github.com/user-attachments/assets/b98429c3-8c0e-48ec-8c59-bec2fbb5b341)
+📋 Dashboard with Tasks
+![image](https://github.com/user-attachments/assets/ae7603ec-6a11-4470-8079-b8a95915414c)
 
-To learn more about Next.js, take a look at the following resources:
+🗂 Folder Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+task-manager/
+├── app/
+│   ├── login/               # Login page
+│   ├── register/            # Register page
+│   ├── dashboard/           # Protected dashboard
+│   └── layout.tsx           # Root layout
+├── components/              # Shared UI components
+├── lib/
+│   ├── store.ts             # Redux store config
+│   └── redux/               # Redux slices (e.g., taskSlice)
+├── public/
+│   └── screenshots/         # Screenshots for README
+├── middleware.ts            # Auth middleware
+├── styles/
+│   └── globals.css          # Global styles
+└── README.md
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+✅ Step-by-Step Implementation
+Step 1: Authentication Pages
 
-## Deploy on Vercel
+    Created /login and /register pages using ShadCN components
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    Connected forms to NextAuth using signIn()
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# task-manger
+Step 2: NextAuth Frontend Setup
+
+    Installed next-auth
+
+    Created app/api/auth/[...nextauth]/route.ts
+
+    Used Credentials Provider with mock logic
+
+Step 3: Layout & Navigation
+
+    Added Header component
+
+    Created root layout with SessionProvider, QueryProvider
+
+Step 4: Protected Routes
+
+    Implemented middleware.ts to protect /dashboard
+
+    Verified sessions using getToken()
+
+Step 5: Task Dashboard UI
+
+    Created TaskList and AddTaskDialog components
+
+    Used TanStack Query for loading tasks
+
+    Tasks are mock-loaded from a local endpoint (no backend)
+
+Step 6: Redux Integration
+
+    Created taskSlice.ts under lib/redux/
+
+    Set up store.ts inside lib/
+
+    Wrapped app with <ReduxProvider> and added actions
+👤 Author
+
+    Your Name — https://github.com/vincentkyalomusembi
+
+    Meru University of Science and Technology
+⚖ License
+
+This project is open-source and free to use.
